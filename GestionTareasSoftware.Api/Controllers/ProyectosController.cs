@@ -32,7 +32,7 @@ namespace GestionTareasSoftware.Api.Controllers
         [HttpGet("{id}")]
         public dynamic Get(int id)
         {
-            var Proyectos = connection.QuerySingle<dynamic>("SELECT * FROM Proyectos WHERE id=@id", new { id = id });
+            var Proyectos = connection.QuerySingle<dynamic>("SELECT * FROM Proyectos WHERE Id=@Id", new { id = id });
             return Proyectos;
         }
 
@@ -49,7 +49,7 @@ namespace GestionTareasSoftware.Api.Controllers
                   NombreProyecto = proyecto.NombreProyecto,
                   Descripcion = proyecto.Descripcion
                 });
-            return "";
+            return proyecto;
         }
 
         // PUT api/<ProyectosController>/5

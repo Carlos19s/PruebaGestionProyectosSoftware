@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace GestionTareasSoftware.Api.Models
 {
@@ -11,6 +12,7 @@ namespace GestionTareasSoftware.Api.Models
 
         [ForeignKey("Proyecto")]
         public int idProyecto { get; set; }
+        [JsonIgnore]
         public Proyecto? proyecto { get; set; }
 
     }

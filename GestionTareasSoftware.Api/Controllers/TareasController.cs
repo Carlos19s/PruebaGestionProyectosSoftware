@@ -42,7 +42,7 @@ namespace GestionTareasSoftware.Api.Controllers
         {
             connection.Execute(
                 @"INSERT INTO Tareas (Id,Nombretarea,Descripcion,Estado,idProyecto) 
-                VALUES (@Id,@Nombretarea, @Descripcion, @Estado,idProyecto)
+                VALUES (@Id,@Nombretarea, @Descripcion, @Estado,@idProyecto)
                 ", new
                 {
                     Id = tarea.Id,
