@@ -2,6 +2,7 @@
 using GestionTareasSoftware.Api.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System.Data.Common;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -27,12 +28,25 @@ namespace GestionTareasSoftware.Api.Controllers
             var Tareas = connection.Query<dynamic>("SELECT * FROM Proyectos").ToList();
             return Tareas;
         }
-
+        // GET api/<ProyectosController>/Proyectos/5
+        [HttpGet("Proyectos/{id}")]
+        public IEnumerable<dynamic> GetTareasByProyecto(int id)
+        {
+            var data = connection.Query<dynamic>("SELECT* FROM Tareas").Aggregate(new List<dynamic>(), (list, tarea) =>
+            {
+                if (tarea.idProyecto == id)
+                {
+                    list.Add(tarea);
+                }
+                return list;
+            });
+            return data;
+        }
         // GET api/<ProyectosController>/5
         [HttpGet("{id}")]
         public dynamic Get(int id)
         {
-            var Proyectos = connection.QuerySingle<dynamic>("SELECT * FROM Proyectos WHERE Id=@Id", new { id = id });
+            var Proyectos = connection.QuerySingle<dynamic>("SELECT * FROM Proyectos WHERE Id=@Id", new { Id = id });
             return Proyectos;
         }
 
@@ -64,7 +78,7 @@ namespace GestionTareasSoftware.Api.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            connection.Execute("Delete From Proyectos Where Id=@Id", new { id = id });
+            connection.Execute("Delete From Proyectos Where Id=@Id", new { Id = id });
         }
     }
 }

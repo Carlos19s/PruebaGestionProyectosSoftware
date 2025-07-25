@@ -27,12 +27,25 @@ namespace GestionTareasSoftware.Api.Controllers
             var Tareas = connection.Query<dynamic>("SELECT * FROM Tareas").ToList();
             return Tareas;
         }
+        [HttpGet("Proyecto/{id}")]
+            public IEnumerable<dynamic> GetTareasByProyecto(int id)
+            {
+                var data = connection.Query<dynamic>("SELECT * FROM Tareas").Aggregate(new List<dynamic>(), (list, tarea) =>
+                {
+                    if (tarea.idProyecto == id)
+                    {
+                        list.Add(tarea);
+                    }
+                    return list;
+                });
+                return data;
+        }
 
         // GET api/<TareasController>/5
         [HttpGet("{id}")]
         public dynamic Get(int id)
         {
-            var Tareas = connection.QuerySingle<dynamic>("SELECT * FROM Tareas WHERE id=@id", new { id = id });
+            var Tareas = connection.QuerySingle<dynamic>("SELECT * FROM Tareas WHERE Id=@Id", new { Id = id });
             return Tareas;
         }
 
@@ -67,7 +80,7 @@ namespace GestionTareasSoftware.Api.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            connection.Execute("Delete From Tareas Where Id=@Id", new { id = id });
+            connection.Execute("Delete From Tareas Where Id=@Id", new { Id = id });
         }
     }
 }

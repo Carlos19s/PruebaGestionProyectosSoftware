@@ -30,7 +30,7 @@ namespace GestionTareasSoftware.Api.Controllers
         [HttpGet("{id}")]
         public dynamic Get(int id)
         {
-            var Usuarios = connection.QuerySingle<dynamic>("SELECT * FROM UsuarioProyectos WHERE id=@id", new { id = id });
+            var Usuarios = connection.QuerySingle<dynamic>("SELECT * FROM UsuarioProyectos WHERE Id=@Id", new { Id = id });
             return Usuarios;
         }
 
@@ -62,7 +62,7 @@ namespace GestionTareasSoftware.Api.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            connection.Execute("Delete From UsuarioProyectos Where Id=@Id", new { id = id });
+            connection.Execute("Delete From UsuarioProyectos Where Id=@Id", new { Id = id });
         }
     }
 }

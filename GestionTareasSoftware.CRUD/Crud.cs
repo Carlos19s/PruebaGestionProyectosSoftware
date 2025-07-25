@@ -40,11 +40,11 @@ namespace GestionTareasSoftware.CRUD
                 }
             }
         }
-        public static List<T> GetBy(String GestionFlotas, int id)
+        public static List<T> GetBy(String Proyectos, int id)
         {
             using (var client = new HttpClient())
             {
-                var response = client.GetAsync($"{EndPoint}/{GestionFlotas}/{id}").Result;
+                var response = client.GetAsync($"{EndPoint}/{Proyectos}/{id}").Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var json = response.Content.ReadAsStringAsync().Result;
@@ -52,6 +52,7 @@ namespace GestionTareasSoftware.CRUD
                 }
                 else
                 {
+
                     throw new Exception($"Error: {response.StatusCode}");
                 }
 

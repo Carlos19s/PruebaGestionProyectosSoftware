@@ -1,0 +1,33 @@
+﻿@{
+    @using Microsoft.AspNetCore.Identity
+        @inject SignInManager<IdentityUser> SignInManager
+    ViewData["Title"] = "Home Page";
+}
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/GestionTareasSoftware.Web.styles.css" asp-append-version="true" />
+
+<body>
+<div class="text-center">
+    <h1 class="display-4">Administracion de Tareas y Proyectos de software</h1>
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <div class="Contenedor_Botones">
+        <buttom class="nav-item">
+                <a class="nav-link text-dark navegacion" asp-area="" asp-controller="Usuarios" asp-action="Index">Usuarios</a>
+        </buttom>
+                <buttom class="nav-item">
+                    <a class="nav-link  navegacion2" asp-area="" asp-controller="Tareas" asp-action="Index">Tareas</a>
+        </buttom>
+                <buttom class="nav-item">
+                    <a class="nav-link text-dark navegacion3" asp-area="" asp-controller="Proyectos" asp-action="Index">Proyectos</a>
+            </buttom>
+                <buttom class="nav-item">
+                <a class="nav-link text-dark navegacion4" asp-area="" asp-controller="UsuarioProyectos" asp-action="Index">UsuarioProyectos</a>
+            </buttom>
+        </div>
+    }
+
+</div>
+</body>
+
