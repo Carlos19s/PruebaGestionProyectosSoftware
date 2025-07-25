@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using GestionTareasSoftware.Api.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using System.Data.Common;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -15,7 +16,7 @@ namespace GestionTareasSoftware.Api.Controllers
         public ProyectosController(IConfiguration config)
         {
             var connString = config.GetConnectionString("DefaultConnection");
-            connection = new MySqlConnector.MySqlConnection(connString);
+            connection = new SqlConnection(connString);
             connection.Open();
 
         }
@@ -40,25 +41,30 @@ namespace GestionTareasSoftware.Api.Controllers
         public dynamic Post([FromBody] Proyecto proyecto)
         {
             connection.Execute(
-                @"INSERT INTO Usuarios (Id,Nombre,Email, Password) 
-                VALUES (@Id,@Nombre, @Email, @Password)
+                @"INSERT INTO Proyectos (Id,NombreProyecto,Descripcion) 
+                VALUES (@Id,@NombreProyecto, @Descripcion)
                 ", new
                 {
-                  
+                  Id=proyecto.Id,
+                  NombreProyecto = proyecto.NombreProyecto,
+                  Descripcion = proyecto.Descripcion
                 });
             return "";
         }
 
         // PUT api/<ProyectosController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public dynamic Put(int id, [FromBody] Proyecto proyecto)
         {
+            connection.Execute("Update Proyectos  Set NombreProyecto= @NombreProyecto,Descripcion=@Descripcion  Where Id=@Id", proyecto);
+            return proyecto;
         }
 
         // DELETE api/<ProyectosController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            connection.Execute("Delete From Proyectos Where Id=@Id", new { id = id });
         }
     }
 }

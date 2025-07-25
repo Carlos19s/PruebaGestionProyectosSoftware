@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using GestionTareasSoftware.Api.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using System.Data.Common;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -15,7 +16,7 @@ namespace GestionTareasSoftware.Api.Controllers
         public UsuariosController(IConfiguration config)
         {
             var connString = config.GetConnectionString("DefaultConnection");
-            connection = new MySqlConnector.MySqlConnection(connString);
+            connection = new SqlConnection(connString);
             connection.Open();
 
         }

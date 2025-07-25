@@ -5,7 +5,7 @@ namespace GestionTareasSoftware.Api.Models
 {
     public class UsuarioProyecto
     {
-        [Key]public int id { get; set; }
+        [Key]public int Id { get; set; }
         [ForeignKey("Usuario")]
         public int idUsuario { get; set; }
         public Usuario? usuario { get; set; }
@@ -13,5 +13,6 @@ namespace GestionTareasSoftware.Api.Models
         public int idProyecto { get; set; }
         [ForeignKey("Proyecto")]
         public Proyecto? proyecto { get; set; }
+
     }
 }
